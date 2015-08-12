@@ -15,6 +15,5 @@ for i in `egrep -o 'https?://[^ ]+' /etc/apt/mirror.list`; do
 done
 
 sed -i '12s/DocumentRoot \/var\/www\/html/DocumentRoot \/var\/www\/package/' /etc/apache2/sites-enabled/000-default.conf
-sed -i '2s/.*/exit 0/' /usr/sbin/policy-rc.d
 
 apt-mirror && apache2ctl -D FOREGROUND
