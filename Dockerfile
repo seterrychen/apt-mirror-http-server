@@ -9,8 +9,6 @@ RUN \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
-VOLUME ["/etc/apt/"]
-
 EXPOSE 80
 COPY setup.sh /setup.sh
 CMD /bin/bash setup.sh
