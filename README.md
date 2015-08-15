@@ -7,7 +7,7 @@ Running command
 ```
 docker run -v /path/data:/var/spool/apt-mirror \
            -v /path/your/mirror.list:/etc/apt/mirror.list \
-           -e TIMEOUT=timeout-value
+           -e TIMEOUT=timeout-value \
            -d -p port_number:80 seterrychen/apt-mirror-http-server
 ```
 /path/data is where to store data, and the TIMEOUT var to repeatedly execute apt-mirror.
