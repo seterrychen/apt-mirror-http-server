@@ -5,7 +5,6 @@ mkdir /var/www/package
 sed -i '12s/DocumentRoot \/var\/www\/html/DocumentRoot \/var\/www\/package/' /etc/apache2/sites-enabled/000-default.conf
 service apache2 restart
 
-UNIT=${TIMEOUT:-12h}
 while true; do
 
     # parse mirror.list to share under /var/www/package path
@@ -22,7 +21,7 @@ while true; do
     done
 
     apt-mirror
-    printf "\n\n====== wait $UNIT to execute apt-mirror again ======\n\n"
-    sleep $UNIT
+    printf "\n\n====== wait $TIMEOUT to execute apt-mirror again ======\n\n"
+    sleep $TIMEOUT
 
 done

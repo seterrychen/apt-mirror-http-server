@@ -2,6 +2,7 @@ FROM ubuntu:14.04
 MAINTAINER Terry Chen <seterrychen@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
+ENV TIMEOUT 12h
 
 RUN \
   apt-get update && \
@@ -9,6 +10,7 @@ RUN \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
+VOLUME /etc/apt
 EXPOSE 80
 COPY setup.sh /setup.sh
-CMD /bin/bash setup.sh
+CMD ["/bin/bash", "setup.sh"]
