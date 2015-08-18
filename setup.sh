@@ -22,7 +22,7 @@ service apache2 restart
 # If user doesn't provide mirror.list, using default setting
 need_create_line=true
 if [ ! -e /etc/apt/mirror.list ]; then
-    echo "Using default mirror.list"
+    echo "Using default mirror.list and apt source is: $MIRROR_URL"
     ln -s /mirror.list /etc/apt/mirror.list
     sed -i "s|http://archive.ubuntu.com/ubuntu|$MIRROR_URL|g" /etc/apt/mirror.list
     create_link
