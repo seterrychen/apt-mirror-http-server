@@ -33,7 +33,9 @@ while true; do
     if $need_create_line; then
         create_link
     fi
+    printf "\n\n====== Starting apt-mirror ======\n\n"
     apt-mirror
-    printf "\n\n====== wait $TIMEOUT to execute apt-mirror again ======\n\n"
+    printf "\n\n====== Completed ======\n\n"
+    printf "====== Sleeping $TIMEOUT to execute apt-mirror again ======\n\n"
     sleep $TIMEOUT
 done
