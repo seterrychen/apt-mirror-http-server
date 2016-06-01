@@ -1,5 +1,8 @@
 # apt-mirror-http-server
 
+[![Docker Stars](https://img.shields.io/docker/stars/seterrychen/apt-mirror-http-server.svg)](https://hub.docker.com/r/seterrychen/apt-mirror-http-server/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/seterrychen/apt-mirror-http-server.svg)](https://hub.docker.com/r/seterrychen/apt-mirror-http-server/)
+
 Base on Ubuntu, using Docker to construct your Apt mirror HTTP server
 
 ## Usage
