@@ -20,5 +20,12 @@ docker run -d \
 ### More options with docker command
 
 * `-v /path/your/mirror.list:/etc/apt/mirror.list`: to replace [Ubuntu default mirror.list](https://github.com/seterrychen/apt-mirror-http-server/blob/master/mirror.list)
-* `-e MIRROR_URL=http://tw.archive.ubuntu.com/ubuntu`: to overwrite the mirror.list when you use this option to specify the mirror site
-* `-e TIMEOUT=timeout-value`: to set the resync period, default is 12 hours. To set the [TIMEOUT format description](http://www.cyberciti.biz/faq/linux-unix-sleep-bash-scripting/)
+* `-e RESYNC_PERIOD=timeout-value`: to set the resync period, default is 12 hours. To set the [TIMEOUT format description](http://www.cyberciti.biz/faq/linux-unix-sleep-bash-scripting/)
+
+## Changelog
+
+* 2017-04-27: version 0.1
+  * Update base image to Ubuntu 16.04
+  * remove option `MIRROR_URL`
+  * rename `TIMEOUT` environment value to `RESYNC_PERIOD`
+  * fix issue [#1 https isn't handle correctly in setup.sh](https://github.com/seterrychen/apt-mirror-http-server/issues/1)

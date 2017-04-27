@@ -1,41 +1,46 @@
 #!/bin/bash
 function create_link {
     # parse mirror.list to share under /var/www/package path
-    for i in `egrep -o '(rsync|ftp|https?)://[^ ]+' /etc/apt/mirror.list`; do
-        url=${i/http:\/\//''}
-        target='/var/www/package/' 
+    grep '^deb' /etc/apt/mirror.list | awk '{print $2}' | while IFS= read -r line
+    do
+        local mirror_path=
+        mirror_path=$(echo "$line" | sed -e 's|^ftp||' -e 's|^https\?||' -e 's|^rsync||' -e 's|://||' -e 's|/$||')
+        local target="/var/www/package"
 
-        IFS='/' read -a distName <<< "$url"
-        dest=$target${distName[-1]}
-        if [ ! -h $dest ]; then 
-            echo "Create $dest"
-            ln -s /var/spool/apt-mirror/mirror/$url $dest
+        local dest=
+        case "$line" in
+            *ubuntu*)
+                dest="$target/ubuntu"
+            ;;
+            *debian*)
+                dest="$target/debian"
+            ;;
+        esac
+        if [ ! -h "$dest" ] && [ x"$dest" != x"" ]; then
+            echo "[$(date)] Create $dest"
+            ln -s "/var/spool/apt-mirror/mirror/$mirror_path" "$dest"
         fi 
     done
 }
 
-# read mirror.list to link /var/www/package folder
-mkdir /var/www/package
-sed -i '12s|DocumentRoot /var/www/html|DocumentRoot /var/www/package|' /etc/apache2/sites-enabled/000-default.conf
-service apache2 restart
+# To setup http server config at first time
+if [ ! -d /var/www/package ]; then
+    mkdir -p /var/www/package
+    sed -i '12s|DocumentRoot /var/www/html|DocumentRoot /var/www/package|' /etc/apache2/sites-enabled/000-default.conf
+    service apache2 restart >/dev/null
 
-# If user doesn't provide mirror.list, using default setting
-need_create_line=true
-if [ ! -e /etc/apt/mirror.list ]; then
-    echo "Using default mirror.list and apt source is: $MIRROR_URL"
-    ln -s /mirror.list /etc/apt/mirror.list
-    sed -i "s|http://archive.ubuntu.com/ubuntu|$MIRROR_URL|g" /etc/apt/mirror.list
+    # If user doesn't provide mirror.list, using default setting
+    if [ ! -e /etc/apt/mirror.list ]; then
+        echo "[$(date)] Using default mirror.list"
+        ln -s /mirror.list /etc/apt/mirror.list
+    fi
     create_link
-    need_create_line=false
 fi
 
 while true; do
-    if $need_create_line; then
-        create_link
-    fi
-    printf "\n\n====== Starting apt-mirror ======\n\n"
+    echo "[$(date)] Starting apt-mirror"
     apt-mirror
-    printf "\n\n====== Completed ======\n\n"
-    printf "====== Sleeping $TIMEOUT to execute apt-mirror again ======\n\n"
-    sleep $TIMEOUT
+    echo "[$(date)] Completed"
+    echo "[$(date)] Sleeping $RESYNC_PERIOD to execute apt-mirror again ======"
+    sleep "$RESYNC_PERIOD"
 done
