@@ -20,5 +20,5 @@ docker run -d \
 ### More options with docker command
 
 * `-v /path/your/mirror.list:/etc/apt/mirror.list`: to replace [Ubuntu default mirror.list](https://github.com/seterrychen/apt-mirror-http-server/blob/master/mirror.list)
-* `-e MIRROR_URL=http://tw.archive.ubuntu.com/ubuntu`: to overwrite the mirror.list when you use this option to specific the mirror site
+* `-e MIRROR_URL=http://tw.archive.ubuntu.com/ubuntu`: to overwrite the mirror.list when you use this option to specify the mirror site
 * `-e TIMEOUT=timeout-value`: to set the resync period, default is 12 hours. To set the [TIMEOUT format description](http://www.cyberciti.biz/faq/linux-unix-sleep-bash-scripting/)
