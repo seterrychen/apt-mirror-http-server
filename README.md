@@ -24,6 +24,9 @@ docker run -d \
 
 ## Changelog
 
+* 2017-04-28: version 0.1.1
+  * Fix http server doesn't start after the container restarted
+
 * 2017-04-27: version 0.1
   * Update base image to Ubuntu 16.04
   * remove option `MIRROR_URL`

@@ -27,7 +27,6 @@ function create_link {
 if [ ! -d /var/www/package ]; then
     mkdir -p /var/www/package
     sed -i '12s|DocumentRoot /var/www/html|DocumentRoot /var/www/package|' /etc/apache2/sites-enabled/000-default.conf
-    service apache2 restart >/dev/null
 
     # If user doesn't provide mirror.list, using default setting
     if [ ! -e /etc/apt/mirror.list ]; then
@@ -36,6 +35,9 @@ if [ ! -d /var/www/package ]; then
     fi
     create_link
 fi
+
+echo "[$(date)] Starting apache server"
+service apache2 start
 
 while true; do
     echo "[$(date)] Starting apt-mirror"
