@@ -13,5 +13,5 @@ RUN apt-get update \
 EXPOSE 80
 COPY setup.sh /setup.sh
 
-VOLUME ["/etc/apt", "/var/spool/apt-mirror"]
+VOLUME ["/var/spool/apt-mirror"]
 CMD ["/bin/bash", "setup.sh"]
