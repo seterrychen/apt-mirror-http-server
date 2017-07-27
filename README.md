@@ -24,6 +24,9 @@ docker run -d \
 
 ## Changelog
 
+* 2017-07-27: version 0.1.2
+  * Fix the container started twice: "httpd (pid 13) already running"
+
 * 2017-04-28: version 0.1.1
   * Fix http server doesn't start after the container restarted
 

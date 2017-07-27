@@ -36,6 +36,9 @@ if [ ! -d /var/www/package ]; then
     create_link
 fi
 
+# Apache gets grumpy about PID files pre-existing
+rm -f /var/run/apache2/apache2.pid
+
 echo "[$(date)] Starting apache server"
 service apache2 start
 
